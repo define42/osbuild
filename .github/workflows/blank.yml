@@ -1,36 +1,42 @@
-# This is a basic workflow to help you get started with Actions
+name: Build images
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    runs-on: ubuntu-22.04
+    services:
+      osbuild-composer:
+        image: ghcr.io/osbuild/osbuild-composer-container:centos-stream-9
+        volumes:
+          - /builds:/builds
+        options: --privileged
+    container:
+      image: ghcr.io/osbuild/osbuild-composer-container:centos-stream-9
+      volumes:
+        - /builds:/builds
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Run the build
+        shell: bash
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          sleep 5
+          tail --follow --lines +1 "/builds/osbuild-composer-journal.txt" &
+          composer-cli() { /usr/bin/composer-cli --socket /builds/weldr-api.socket "$@"; }
+          composer-cli blueprints push my-image.toml
+          compose_id=$(composer-cli --json compose start my-image qcow2 | jq -r ".[].body.build_id")
+          while [[ $(composer-cli --json compose info "${compose_id}" | jq -r ".[].body.queue_status") =~ RUNNING|WAITING ]]; do sleep 15; done
+          
+          # check whether the build succeeded
+          [[ $(composer-cli --json compose info "${compose_id}" | jq -r ".[].body.queue_status") =~ FINISHED ]] || exit 1
+          
+          composer-cli compose image "${compose_id}" --filename image.qcow2
+
+      - name: Upload image artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: image.qcow2
+          path: image.qcow2
