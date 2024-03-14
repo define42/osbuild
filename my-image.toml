@@ -1,0 +1,2 @@
+name = "my-image"
+packages = [{name = "nginx"}]
