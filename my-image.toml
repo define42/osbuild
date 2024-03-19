@@ -1,6 +1,21 @@
 name = "my-image"
 #packages = [{name = "nginx"}]
 
+[[packages]]
+name = "microshift"
+version = "*"
+
+[[packages]]
+name = "conntrack-tools"
+version = "*"
+
+[[packages]]
+name = "openshift-clients"
+version = "*"
+
+[[packages]]
+name = "podman"
+version = "*"
 
 [[repos]]
 name = "epel"
@@ -13,6 +28,3 @@ name = "microshift"
 baseurl = "https://mirror.openshift.com/pub/openshift-v4/x86_64/microshift/ocp/latest-4.15/el9/os/"
 check_gpg = false
 
-[[packages]]
-name = "microshift"
-version = "*"

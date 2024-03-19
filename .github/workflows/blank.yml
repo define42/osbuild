@@ -29,7 +29,7 @@ jobs:
           composer-cli sources add microshift.toml
           composer-cli sources add crio.toml
           composer-cli sources add kubic.toml
-          composer-cli blueprints push microshift-blueprint-v0.0.1.toml
+          composer-cli blueprints push my-image.toml
           compose_id=$(composer-cli --json compose start my-image qcow2 | jq -r ".[].body.build_id")
           while [[ $(composer-cli --json compose info "${compose_id}" | jq -r ".[].body.queue_status") =~ RUNNING|WAITING ]]; do sleep 15; done
           
