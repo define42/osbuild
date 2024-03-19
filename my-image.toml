@@ -9,9 +9,9 @@ version = "*"
 name = "conntrack-tools"
 version = "*"
 
-[[packages]]
-name = "openshift-clients"
-version = "*"
+#[[packages]]
+#name = "openshift-clients"
+#version = "*"
 
 [[packages]]
 name = "podman"
