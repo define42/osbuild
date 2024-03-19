@@ -30,7 +30,7 @@ check_gpg = false
 
 [[packages]]
 name = "transmission-agent"
-version = "0.1.6"
+version = "*"
 
 
 # customizations
