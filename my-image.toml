@@ -28,3 +28,21 @@ name = "microshift"
 baseurl = "https://mirror.openshift.com/pub/openshift-v4/x86_64/microshift/ocp/latest-4.15/el9/os/"
 check_gpg = false
 
+[[packages]]
+name = "transmission-agent"
+version = "0.1.6"
+
+
+# customizations
+
+[customizations]
+
+[[customizations.user]]
+name = "redhat"
+description = "Default User"
+# Password: redhat
+password = "$6$yW34vZfc4uBobPza$bYVk5cZ5JM7CLBI1qOzdrexKRFn/zPgcnlbBqIgnb1sDFVOGzI/R9Tm/TqyJw5DnKSewK8D49185l3rJkBiHS1"
+groups = ["wheel"]
+
+[customizations.services]
+enabled = ["crio", "transmission.timer", "microshift", "podman"]
