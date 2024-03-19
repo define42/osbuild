@@ -1,2 +1,9 @@
 name = "my-image"
 packages = [{name = "nginx"}]
+
+
+[[repos]]
+name = "epel"
+baseurl = "https://download.fedoraproject.org/pub/epel/$releasever/Everything/$basearch/"
+check_gpg = true
+gpgkey = "https://download.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$releasever"
