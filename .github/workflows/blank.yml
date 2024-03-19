@@ -30,16 +30,16 @@ jobs:
           composer-cli sources add crio.toml
           composer-cli sources add kubic.toml
           composer-cli blueprints push my-image.toml
-          compose_id=$(composer-cli --json compose start my-image qcow2 | jq -r ".[].body.build_id")
+          compose_id=$(composer-cli --json compose start my-image live-iso | jq -r ".[].body.build_id")
           while [[ $(composer-cli --json compose info "${compose_id}" | jq -r ".[].body.queue_status") =~ RUNNING|WAITING ]]; do sleep 15; done
           
           # check whether the build succeeded
           [[ $(composer-cli --json compose info "${compose_id}" | jq -r ".[].body.queue_status") =~ FINISHED ]] || exit 1
           
-          composer-cli compose image "${compose_id}" --filename image.qcow2
+          composer-cli compose image "${compose_id}" --filename image.iso
 
       - name: Upload image artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: image.qcow2
-          path: image.qcow2
+          name: image.iso
+          path: image.iso
