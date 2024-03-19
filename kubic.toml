@@ -1,0 +1,6 @@
+id = "kubic"
+name = "kubic"
+type = "yum-baseurl"
+url = "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/CentOS_9_Stream/x86_64/"
+check_gpg = false
+check_ssl = false
