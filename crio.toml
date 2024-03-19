@@ -1,0 +1,6 @@
+id = "cri"
+name = "cri"
+type = "yum-baseurl"
+url = "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/1.24/CentOS_8_Stream/x86_64/"
+check_gpg = false
+check_ssl = false
