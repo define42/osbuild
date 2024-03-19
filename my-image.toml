@@ -1,5 +1,5 @@
 name = "my-image"
-packages = [{name = "nginx"}]
+#packages = [{name = "nginx"}]
 
 
 [[repos]]
@@ -7,3 +7,12 @@ name = "epel"
 baseurl = "https://download.fedoraproject.org/pub/epel/$releasever/Everything/$basearch/"
 check_gpg = true
 gpgkey = "https://download.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$releasever"
+
+[[microshift]]
+name = "microshift"
+baseurl = "https://mirror.openshift.com/pub/openshift-v4/x86_64/microshift/ocp/latest-4.15/el9/os/"
+check_gpg = false
+
+[[packages]]
+name = "microshift"
+version = "*"
