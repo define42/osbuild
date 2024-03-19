@@ -28,9 +28,9 @@ name = "microshift"
 baseurl = "https://mirror.openshift.com/pub/openshift-v4/x86_64/microshift/ocp/latest-4.15/el9/os/"
 check_gpg = false
 
-[[packages]]
-name = "transmission-agent"
-version = "*"
+#[[packages]]
+#name = "transmission-agent"
+#version = "*"
 
 
 # customizations
@@ -45,4 +45,4 @@ password = "$6$yW34vZfc4uBobPza$bYVk5cZ5JM7CLBI1qOzdrexKRFn/zPgcnlbBqIgnb1sDFVOG
 groups = ["wheel"]
 
 [customizations.services]
-enabled = ["crio", "transmission.timer", "microshift", "podman"]
+enabled = ["crio", "microshift", "podman"]
