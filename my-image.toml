@@ -14,5 +14,5 @@ baseurl = "https://mirror.openshift.com/pub/openshift-v4/x86_64/microshift/ocp/l
 check_gpg = false
 
 [[packages]]
-name = "vim"
+name = "microshift"
 version = "*"
