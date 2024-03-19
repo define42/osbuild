@@ -26,6 +26,7 @@ jobs:
           sleep 5
           tail --follow --lines +1 "/builds/osbuild-composer-journal.txt" &
           composer-cli() { /usr/bin/composer-cli --socket /builds/weldr-api.socket "$@"; }
+          composer-cli sources add microshift.toml
           composer-cli blueprints push my-image.toml
           compose_id=$(composer-cli --json compose start my-image qcow2 | jq -r ".[].body.build_id")
           while [[ $(composer-cli --json compose info "${compose_id}" | jq -r ".[].body.queue_status") =~ RUNNING|WAITING ]]; do sleep 15; done
